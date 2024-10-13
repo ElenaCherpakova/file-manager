@@ -1,4 +1,5 @@
 import { cpus } from 'node:os';
+import { colors } from '../utils/colors.js';
 
 export const getCPUs = () => {
   const totalAmountOfCPU = cpus().length;
@@ -9,6 +10,6 @@ export const getCPUs = () => {
       'Clock Rate (GHz)': (cpu.speed / 1000).toFixed(2),
     };
   });
-  console.log(`Overall amount of CPUs: ${totalAmountOfCPU}`);
+  console.log(`${colors.blue} Overall amount of CPUs: ${totalAmountOfCPU}${colors.reset}`);
   console.table(qntOfCPU);
 };

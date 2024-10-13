@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import zlib from 'zlib';
 import { finished } from 'stream/promises';
+import { colors } from '../utils/colors.js';
 
 export const decompress = async (pathToFile, pathToDes) => {
   const srcFile = path.resolve(process.cwd(), pathToFile);
@@ -38,7 +39,7 @@ export const decompress = async (pathToFile, pathToDes) => {
 
     await finished(writeStream);
     await finished(readStream);
-    console.log('Done decompressing');
+    console.log(`${colors.green}Done decompressing${colors.reset}`);
   } catch (error) {
     error.code === 'ENOENT'
       ? console.error('FS operation failed: Source file does not exist')

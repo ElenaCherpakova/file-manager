@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'path';
+import { colors } from '../utils/colors.js';
 
 export const copy = async (pathToFile, pathToNewDir) => {
   const srcFile = path.resolve(process.cwd(), pathToFile).trim();
@@ -18,7 +19,10 @@ export const copy = async (pathToFile, pathToNewDir) => {
     });
 
     if (!destStats.isDirectory()) {
-      console.error('Destination path is not a directory');
+      console.error(
+        `${colors.yellow}Destination path is not a directory${colors.reset}`
+      );
+
       return;
     }
     const readStream = fs.createReadStream(srcFile);
@@ -36,9 +40,9 @@ export const copy = async (pathToFile, pathToNewDir) => {
 
     writeStream.on('finish', () => {
       console.log(
-        `File '${path.basename(
+        `${colors.green}File '${path.basename(
           srcFile
-        )}' was copied to '${destDir}' successfully.`
+        )}' was copied to '${destDir}' successfully.${colors.reset}`
       );
     });
   } catch (error) {

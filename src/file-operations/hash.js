@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import fs from 'node:fs';
 import path from 'path';
+import { colors } from '../utils/colors.js';
 
 export const hashFile = async (pathToFile) => {
   const srcFile = path.resolve(process.cwd(), pathToFile);
@@ -10,6 +11,6 @@ export const hashFile = async (pathToFile) => {
     hash.update(chunk);
   });
   fileStream.on('end', () => {
-    console.log(`Hash: ${hash.digest('hex')}`);
+    console.log(`${colors.blue}Hash: ${hash.digest('hex')}${colors.reset}`);
   });
 };

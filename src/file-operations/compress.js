@@ -1,12 +1,13 @@
 import path from 'path';
-import fs from 'fs'; 
+import fs from 'fs';
 import zlib from 'zlib';
 import { finished } from 'stream/promises';
+import { colors } from '../utils/colors.js';
 
 export const compress = async (pathToFile, pathToDes) => {
-  const srcFile = path.resolve(process.cwd(), pathToFile)
-  const destDir = path.resolve(process.cwd(), pathToDes)
-  const destFile = path.resolve(destDir, path.basename(srcFile) + '.br')
+  const srcFile = path.resolve(process.cwd(), pathToFile);
+  const destDir = path.resolve(process.cwd(), pathToDes);
+  const destFile = path.resolve(destDir, path.basename(srcFile) + '.br');
 
   try {
     await fs.promises.access(srcFile);
@@ -28,7 +29,7 @@ export const compress = async (pathToFile, pathToDes) => {
     const writeStream = fs.createWriteStream(destFile);
 
     const brotli = zlib.createBrotliCompress();
-    
+
     readStream.pipe(brotli).pipe(writeStream);
 
     readStream.on('error', (error) => {
@@ -38,10 +39,9 @@ export const compress = async (pathToFile, pathToDes) => {
       console.error(`Error writing file: ${error.message}`);
     });
 
-    await finished(writeStream)
-    await finished(readStream)
-    console.log('Done compressing');
-
+    await finished(writeStream);
+    await finished(readStream);
+    console.log(`${colors.green}Done compressing${colors.reset}`);
   } catch (error) {
     error.code === 'ENOENT'
       ? console.error('FS operation failed: Source file does not exist')

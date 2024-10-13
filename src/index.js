@@ -20,17 +20,20 @@ import { arcCPU } from './system/architecture.js';
 import { hashFile } from './file-operations/hash.js';
 import { compress } from './file-operations/compress.js';
 import { decompress } from './file-operations/decompress.js';
+import { colors } from './utils/colors.js';
 
 process.chdir(os.userInfo().homedir);
 
 let username = parseArgs();
 
 const currentPath = () => {
-  console.log(`You are currently in ${process.cwd()}`);
+  console.log(`${colors.reset}You are currently in ${process.cwd()}`);
 };
 
 const handleExit = () => {
-  console.log(`Thank you for using File Manager, ${username}, goodbye!`);
+  console.log(
+    `${colors.green}Thank you for using File Manager, ${username}, goodbye!${colors.reset}`
+  );
   process.exit();
 };
 
@@ -43,7 +46,9 @@ const handleCommand = async (command, args) => {
       if (args.length === 1) {
         await changeDirectory(args[0]);
       } else {
-        console.error('Invalid input: cd requires a single argument.');
+        console.error(
+          `${colors.yellow}Invalid input: cd requires a single argument.${colors.reset}`
+        );
       }
       break;
     case 'ls':
@@ -53,14 +58,18 @@ const handleCommand = async (command, args) => {
       if (args.length === 1) {
         await read(args[0]);
       } else {
-        console.error('Invalid input: cat requires a single argument.');
+        console.error(
+          `${colors.yellow}Invalid input: cat requires a single argument.${colors.reset}`
+        );
       }
       break;
     case 'add':
       if (args.length === 1) {
         await createEmptyFile(args[0]);
       } else {
-        console.error('Invalid input: add requires a single argument.');
+        console.error(
+          `${colors.yellow}Invalid input: add requires a single argument.${colors.reset}`
+        );
       }
       break;
     case 'rn':
@@ -68,7 +77,7 @@ const handleCommand = async (command, args) => {
         await renameFile(args[0], args[1]);
       } else {
         console.error(
-          'Invalid input: rename requires two arguments. e.g rn oldFileName newFileName'
+          `${colors.yellow}Invalid input: rename requires two arguments. e.g rn oldFileName newFileName${colors.reset}`
         );
       }
       break;
@@ -77,7 +86,7 @@ const handleCommand = async (command, args) => {
         await copy(args[0], args[1]);
       } else {
         console.error(
-          'Invalid input: copy requires two arguments. e.g cp sourceFolder destinationFolder'
+          `${colors.yellow}Invalid input: copy requires two arguments. e.g cp sourceFolder destinationFolder${colors.reset}`
         );
       }
       break;
@@ -86,7 +95,7 @@ const handleCommand = async (command, args) => {
         await move(args[0], args[1]);
       } else {
         console.error(
-          'Invalid input: move requires two arguments. e.g mv sourceFolder destinationFolder'
+          `${colors.yellow}Invalid input: move requires two arguments. e.g mv sourceFolder destinationFolder${colors.reset}`
         );
       }
       break;
@@ -95,7 +104,7 @@ const handleCommand = async (command, args) => {
         await remove(args[0]);
       } else {
         console.error(
-          'Invalid input: remove requires one argument. e.g rm fileName'
+          `${colors.yellow}Invalid input: remove requires one argument. e.g rm fileName${colors.reset}`
         );
       }
       break;
@@ -104,7 +113,7 @@ const handleCommand = async (command, args) => {
         await hashFile(args[0]);
       } else {
         console.error(
-          'Invalid input: hash requires 1 argument. e.g hash sourceFile'
+          `${colors.yellow}Invalid input: hash requires 1 argument. e.g hash sourceFile${colors.reset}`
         );
       }
       break;
@@ -113,7 +122,7 @@ const handleCommand = async (command, args) => {
         await compress(args[0], args[1]);
       } else {
         console.error(
-          'Invalid input: compress requires two arguments. e.g compress sourceFolder destinationFolder'
+          `${colors.yellow}Invalid input: compress requires two arguments. e.g compress sourceFolder destinationFolder${colors.reset}`
         );
       }
       break;
@@ -122,7 +131,7 @@ const handleCommand = async (command, args) => {
         await decompress(args[0], args[1]);
       } else {
         console.error(
-          'Invalid input: decompress requires two arguments. e.g decompress sourceFolder destinationFolder'
+          `${colors.yellow}Invalid input: decompress requires two arguments. e.g decompress sourceFolder destinationFolder${colors.reset}`
         );
       }
       break;
@@ -145,17 +154,21 @@ const handleCommand = async (command, args) => {
             arcCPU();
             break;
           default:
-            console.error('Invalid input: os requires a single argument.');
+            console.error(
+              `${colors.yellow}Invalid input: os requires a single argument.${colors.reset}`
+            );
         }
       } else {
-        console.error('Invalid input: os requires a single argument.');
+        console.error(
+          `${colors.yellow}Invalid input: os requires a single argument.${colors.reset}`
+        );
       }
       break;
     case '.exit':
       handleExit();
       break;
     default:
-      console.error('Invalid command');
+      console.error(`${colors.yellow}Invalid command${colors.reset}`);
   }
   currentPath();
 };
@@ -171,6 +184,6 @@ const listenToInput = () => {
   });
   process.on('SIGINT', handleExit);
 };
-currentPath()
+currentPath();
 stdout.write('> ');
 listenToInput();

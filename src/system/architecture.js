@@ -1,3 +1,5 @@
+import { colors } from '../utils/colors.js';
+
 export const arcCPU = () => {
-  console.log(`Your system architecture is: ${process.arch}`);
+  console.log(`${colors.blue}Your system architecture is: ${process.arch}${colors.reset}`);
 };

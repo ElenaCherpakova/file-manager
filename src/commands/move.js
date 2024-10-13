@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'path';
+import { colors } from '../utils/colors.js';
 
 export const move = async (pathToFile, pathToNewDir) => {
   const srcFile = path.resolve(process.cwd(), pathToFile).trim();
@@ -32,9 +33,9 @@ export const move = async (pathToFile, pathToNewDir) => {
       try {
         await fs.promises.unlink(srcFile);
         console.log(
-          `File '${path.basename(
+          `${colors.green}File '${path.basename(
             srcFile
-          )}' was moved to '${destDir}' successfully.`
+          )}' was moved to '${destDir}' successfully.${colors.reset}`
         );
       } catch (error) {
         console.error(`Error deleting the original file: ${error.message}`);

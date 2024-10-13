@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { colors } from '../utils/colors.js';
 
 export const renameFile = async (oldFileName, newFileName) => {
   const oldNameFilePath = path.resolve(process.cwd(), oldFileName);
@@ -18,7 +19,9 @@ export const renameFile = async (oldFileName, newFileName) => {
     await fs.rename(oldFileName, newFileName);
     const oldName = path.basename(oldFileName);
     const newName = path.basename(newFileName);
-    console.log(`File ${oldName} was renamed to ${newName}`);
+    console.log(
+      `${colors.green}File ${oldName} was renamed to ${newName}${colors.reset}`
+    );
   } catch (error) {
     error.code === 'ENOENT'
       ? console.error('FS operation failed: Source file does not exist')

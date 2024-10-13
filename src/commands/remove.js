@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'node:fs/promises';
+import { colors } from '../utils/colors.js';
 
 export const remove = async (pathToFile) => {
   const fileToRemove = path.resolve(process.cwd(), pathToFile).trim();
@@ -7,7 +8,7 @@ export const remove = async (pathToFile) => {
     await fs.access(fileToRemove);
     await fs.unlink(fileToRemove);
     console.log(
-      `File '${path.basename(fileToRemove)}' was removed successfully.`
+      `${colors.green}File '${path.basename(fileToRemove)}' was removed successfully.${colors.reset}`
     );
   } catch (error) {
     error.code === 'ENOENT'

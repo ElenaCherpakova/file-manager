@@ -1,7 +1,8 @@
 import { stdout } from 'node:process';
 import fs from 'node:fs';
-
 import path from 'path';
+import { colors } from '../utils/colors.js';
+
 export const read = async (content) => {
   try {
     const fileToRead = path.resolve(process.cwd(), content);
@@ -19,7 +20,9 @@ export const read = async (content) => {
       }
     });
     fileStream.on('end', () => {
-      console.log('\nThe process of reading file is completed.');
+      console.log(
+        `${colors.green}\nThe process of reading the file is completed.${colors.reset}`
+      );
     });
   } catch (error) {
     error.code === 'ENOENT'
