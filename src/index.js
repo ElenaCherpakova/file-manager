@@ -171,6 +171,6 @@ const listenToInput = () => {
   });
   process.on('SIGINT', handleExit);
 };
-
+currentPath()
 stdout.write('> ');
 listenToInput();
